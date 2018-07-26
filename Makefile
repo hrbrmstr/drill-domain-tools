@@ -3,13 +3,14 @@
 DRILL_HOME ?= /usr/local/drill
 
 udf:
-	mvn --quiet clean package -DSkipTests
+	mvn --quiet clean package -DskipTests
 
 install:
-	cp target/drill-domain-tools*.jar ${DRILL_HOME}/jars/3rdparty
+	cp target/drill-domain-tools*.jar ${DRILL_HOME}/jars/3rdparty && \
+	cp deps/crawler-commons-0.10.jar ${DRILL_HOME}/jars/3rdparty
 
 restart:
 	drillbit.sh restart
 
 deps:
-	mvn dependency:copy-dependencies -DoutputDirectory=deps
+	mvn --quiet dependency:copy-dependencies -DoutputDirectory=deps
