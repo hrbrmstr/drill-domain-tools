@@ -8,7 +8,7 @@ import org.apache.drill.exec.expr.annotations.Param;
 import org.apache.drill.exec.expr.holders.VarCharHolder;
 import org.apache.drill.exec.vector.complex.writer.BaseWriter;
 
-import crawlercommons.domains.EffectiveTldFinder;
+// import crawlercommons.domains.EffectiveTldFinder;
 
 import javax.inject.Inject;
 
@@ -37,8 +37,6 @@ public class SuffixExtract implements DrillSimpleFunc {
     );
     
     try {
-
-      org.apache.drill.exec.expr.holders.VarCharHolder row =  new org.apache.drill.exec.expr.holders.VarCharHolder();
 
       String hostname = null;
       String assigned = null;
@@ -83,40 +81,28 @@ public class SuffixExtract implements DrillSimpleFunc {
         byte[] hostBytes = hostname.getBytes();
         buffer.reallocIfNeeded(hostBytes.length); 
         buffer.setBytes(0, hostBytes);
-        row.start = 0; 
-        row.end = hostBytes.length; 
-        row.buffer = buffer;
-        mw.varChar("hostname").write(row);
+        mw.varChar("hostname").writeVarChar(0, hostBytes.length, buffer);
       }
 
       if (assigned != null) {
         byte[] assignBytes = assigned.getBytes();
         buffer.reallocIfNeeded(assignBytes.length); 
         buffer.setBytes(0, assignBytes);
-        row.start = 0; 
-        row.end = assignBytes.length; 
-        row.buffer = buffer;
-        mw.varChar("assigned").write(row);
+        mw.varChar("assigned").writeVarChar(0, assignBytes.length, buffer);
       }
 
       if (subdomain != null) {
         byte[] subBytes = subdomain.getBytes();
         buffer.reallocIfNeeded(subBytes.length); 
         buffer.setBytes(0, subBytes);
-        row.start = 0; 
-        row.end = subBytes.length; 
-        row.buffer = buffer;
-        mw.varChar("subdomain").write(row);
+        mw.varChar("subdomain").writeVarChar(0, subBytes.length, buffer);
       }
 
       if (tld != null) {
         byte[] tldBytes = tld.getBytes();
         buffer.reallocIfNeeded(tldBytes.length); 
         buffer.setBytes(0, tldBytes);
-        row.start = 0; 
-        row.end = tldBytes.length; 
-        row.buffer = buffer;
-        mw.varChar("tld").write(row);
+        mw.varChar("tld").writeVarChar(0, tldBytes.length, buffer);
       }
 
     } catch (Exception e) { 
